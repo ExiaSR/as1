@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">zichun3-HabitTrack</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_history">View History</string>
+    <string name="habit_name">Habit Name</string>
+    <string name="promot_habit_name_msg">Enter habit name</string>
+    <string name="date_string">Date</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_create_habit">Create your habit</string>
+
+
+    <!-- Strings related to create habit -->
+    <string name="prompt_habit_name">Habit Name</string>
+    <string name="prompt_date">Date (optional)</string>
+    <string name="prompt_habit_repeat">Repeat Day</string>
+    <string name="create_habit_button">Create Habit</string>
+    <string name="repeat_dialog">Repeat</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <array name="day_selector">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </array>
+</resources>
