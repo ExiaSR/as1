@@ -1,10 +1,12 @@
 # HabitTracker
+Assignment 1 of CMPUT 301 at U of A
 
 # Video URL
 
 
 # Credits
 * [GSON](https://github.com/google/gson)
+* [Android Developers](https://developer.android.com/index.html)
 
 # License
 This software is under [MIT license](https://opensource.org/licenses/MIT)
