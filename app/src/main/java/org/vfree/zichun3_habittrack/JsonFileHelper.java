@@ -15,22 +15,27 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-
+/**
+ * A class that provide several methods to
+ * save and load habit object into json file
+ * which is store at the internal storage
+ *
+ */
 public class JsonFileHelper {
     protected Context context;
-    private Gson gson;
 
     public JsonFileHelper(Context context) {
         this.context = context;
     }
+
     /**
      * Deserialize all saved json file into
      * an ArrayList of objects
      *
      * @return an ArrayList content all past habit
      */
-    public ArrayList<Habit> loadAllFile() {
-        gson = new Gson();
+    protected ArrayList<Habit> loadAllFile() {
+        Gson gson = new Gson();
         ArrayList<Habit> habitList = new ArrayList<>();
         Habit habitBuffer;
         String[] fileList = getFileList();
@@ -56,8 +61,8 @@ public class JsonFileHelper {
      *
      * @param habit habit to be saved
      */
-    public void saveInFile(Habit habit) {
-        gson = new Gson();
+    protected void saveInFile(Habit habit) {
+        Gson gson = new Gson();
         // serialize habit object into json string
         String jsonStr = gson.toJson(habit);
         try  {
@@ -74,18 +79,23 @@ public class JsonFileHelper {
         }
     }
 
-    // using timestamp as each habit's file name
-    // at least in this app, the chance of two file being
-    // creating at same the time as impossible
+    /**
+     * Using timestamp as each habit's file name
+     * since the chance of two file being
+     * creating at same the time as impossible
+     *
+     * @param habit habit object
+     * @return
+     */
     private String generateFileName(Habit habit) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-        //Log.d("file_name", sdf.format(habit.getCreatedDate().getTime()) + ".json");
+        Log.d("file_name", sdf.format(habit.getCreatedDate().getTime()) + ".json");
         return sdf.format(habit.getCreatedDate().getTime()) + ".json";
     }
 
     // get all private insternal storage files' name
-    public String[] getFileList() {
+    protected String[] getFileList() {
         return context.fileList();
     }
 }
