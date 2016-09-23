@@ -5,8 +5,8 @@ Assignment 1 of CMPUT 301 at U of A
 
 
 # Credits
-* [GSON](https://github.com/google/gson)
-* [Android Developers](https://developer.android.com/index.html)
+* [GSON](https://github.com/google/gson) -- A Java Json library
+* [Android Developers](https://developer.android.com/index.html) -- Code is referenced from this website unless other specify
 
 # License
 This software is under [MIT license](https://opensource.org/licenses/MIT)
