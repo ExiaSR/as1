@@ -2,11 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.vfree.zichun3_habittrack">
 
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.READ_PROFILE"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -24,13 +19,11 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".CreateHabitSampleActivity"
+                android:name=".CreateHabitActivity"
                 android:label="@string/title_activity_create_habit"/>
         <activity
-                android:name=".CreateHabitSampleActivity"
-                android:label="@string/title_activity_create_habit"/>
-        <activity android:name=".CreateHabitActivity"/>
-        <activity android:name=".HabitHistoryActivity">
+                android:name=".HabitHistoryActivity"
+                android:label="@string/title_activity_history_habit">
         </activity>
     </application>
 

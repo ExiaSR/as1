@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">zichun3-HabitTrack</string>
+    <string name="app_name">zichun3-HabitTracker</string>
     <string name="action_settings">Settings</string>
     <string name="action_history">View History</string>
     <string name="habit_name">Habit Name</string>
@@ -9,6 +9,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_create_habit">Create your habit</string>
+    <string name="title_activity_history_habit">Habit History</string>
 
 
     <!-- Strings related to create habit -->
