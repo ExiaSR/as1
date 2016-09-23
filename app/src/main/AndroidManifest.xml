@@ -25,6 +25,8 @@
                 android:name=".HabitHistoryActivity"
                 android:label="@string/title_activity_history_habit">
         </activity>
+        <activity android:name=".HabitCompletionActivity">
+        </activity>
     </application>
 
 </manifest>
