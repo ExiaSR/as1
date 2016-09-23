@@ -1,6 +1,7 @@
 package org.vfree.zichun3_habittrack;
 
 import android.text.BoringLayout;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -9,10 +10,10 @@ import java.util.Date;
 public abstract class Habit{
     private String habitName;
     private Calendar date;
+    private Calendar createdDate;
     private ArrayList<String> habitOccurance;
     private ArrayList<Calendar> habitCompletion;
     private ArrayList<Calendar> habitFailure;
-    private JsonFileHelper jsonFile;
 
     /**
      * constructor when user only specify the habit name
@@ -30,6 +31,7 @@ public abstract class Habit{
         // if date is not given, default is current date
         this.habitName = habitName;
         this.date = Calendar.getInstance();
+        this.createdDate = Calendar.getInstance();
     }
 
     /**
@@ -49,6 +51,7 @@ public abstract class Habit{
         // set date to the given date
         this.habitName = habitName;
         this.date = date;
+        this.createdDate = Calendar.getInstance();
     }
 
     /**
@@ -64,6 +67,35 @@ public abstract class Habit{
         if (habitName.isEmpty()) {
             throw new InvalidHabitException();
         }
+        this.habitName = habitName;
+        this.date = date;
+        this.createdDate = Calendar.getInstance();
+        this.habitOccurance = habitOccurrence;
+    }
+
+    /**
+     *
+     * @param habitName user specify habit name
+     * @param date user specify start date
+     * @param habitOccurance user specify event ouccrance
+     * @param habitCompletion a list of tiemstamp that user complete the habit
+     * @param habitFailure a list of timestamp that user fail to complete the habit
+     * @throws InvalidHabitException if habit name is not specify
+     */
+    public Habit(String habitName, Calendar date, ArrayList<String> habitOccurance,
+                 ArrayList<Calendar> habitCompletion, ArrayList<Calendar> habitFailure) throws InvalidHabitException{
+        if (habitName.isEmpty()) {
+            throw new InvalidHabitException();
+        }
+
+        // set habitName
+        // set date to the given date
+        this.habitName = habitName;
+        this.date = date;
+        this.createdDate = Calendar.getInstance();
+        this.habitOccurance = habitOccurance;
+        this.habitCompletion = habitCompletion;
+        this.habitFailure = habitFailure;
     }
 
     /**
@@ -71,7 +103,7 @@ public abstract class Habit{
      *
      * @return TRUE or FALSE
      */
-    public boolean isCompleted() {
+    protected boolean isCompleted() {
         if (this.habitCompletion.isEmpty()) {
             return Boolean.FALSE;
         } else {
@@ -128,5 +160,13 @@ public abstract class Habit{
 
     public void setHabitFailure(ArrayList<Calendar> habitFailure) {
         this.habitFailure = habitFailure;
+    }
+
+    public Calendar getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Calendar createdDate) {
+        this.createdDate = createdDate;
     }
 }

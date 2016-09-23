@@ -1,6 +1,7 @@
 package org.vfree.zichun3_habittrack;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.Streams;
@@ -16,11 +17,15 @@ import java.util.ArrayList;
 
 
 public class JsonFileHelper {
-    private Context context;
+    protected Context context;
     private Gson gson;
 
+    public JsonFileHelper(Context context) {
+        this.context = context;
+    }
     /**
-     * Read all saved habit records from internal storage
+     * Deserialize all saved json file into
+     * an ArrayList of objects
      *
      * @return an ArrayList content all past habit
      */
@@ -42,20 +47,30 @@ public class JsonFileHelper {
         return habitList;
     }
 
-    // save a habit record to internal storage
+    /**
+     * Serialize habit object into json string
+     * and write it into Android internal storage
+     *
+     * Save each habit as a file to prevent memory
+     * overflow in case there are too many habits
+     *
+     * @param habit habit to be saved
+     */
     public void saveInFile(Habit habit) {
         gson = new Gson();
         // serialize habit object into json string
         String jsonStr = gson.toJson(habit);
         try  {
             // write json string into corresponding file
-            FileOutputStream fos = context.openFileOutput(generateFileName(habit), Context.MODE_PRIVATE);
+            FileOutputStream fos = context.openFileOutput(generateFileName(habit), Context.MODE_APPEND);
             fos.write(jsonStr.getBytes());
             fos.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            throw new RuntimeException();
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException();
         }
     }
 
@@ -65,11 +80,12 @@ public class JsonFileHelper {
     private String generateFileName(Habit habit) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-        return sdf.format(habit.getDate().getTime()) + ".json";
+        //Log.d("file_name", sdf.format(habit.getCreatedDate().getTime()) + ".json");
+        return sdf.format(habit.getCreatedDate().getTime()) + ".json";
     }
 
     // get all private insternal storage files' name
-    private String[] getFileList() {
+    public String[] getFileList() {
         return context.fileList();
     }
 }

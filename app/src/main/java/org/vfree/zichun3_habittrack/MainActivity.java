@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
      * and ToDoHabit
      */
     protected void loadAllHabit() {
-        jsonFile = new JsonFileHelper();
+        jsonFile = new JsonFileHelper(this);
         habitList = jsonFile.loadAllFile();
         // check if there is any file exist
         if (!habitList.isEmpty()) {

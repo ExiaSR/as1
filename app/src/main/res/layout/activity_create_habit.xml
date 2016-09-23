@@ -28,6 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_habit_name"
+                    android:inputType="textNoSuggestions"
                     android:maxLines="1"
                     android:singleLine="true"/>
 
@@ -44,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_date"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -64,10 +65,11 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
+                android:id="@+id/create_habit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/create_habit_button"
-                android:onClick="createHabit"/>
+                />
 
 
         </LinearLayout>

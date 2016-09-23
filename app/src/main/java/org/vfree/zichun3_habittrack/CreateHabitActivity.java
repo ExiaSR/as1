@@ -9,16 +9,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class CreateHabitActivity extends AppCompatActivity implements View.OnClickListener{
+    private Habit newHabit;
+    private Calendar newHabitDate;
     private EditText habitNameText;
     private EditText habitDateText;
     private EditText habitRepeatText;
+    private Button createHabitButton;
     private int mYear, mMonth, mDay;
     private DatePickerDialog datePickerDialog;
     final String[] daySelector = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
@@ -40,6 +45,9 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
         habitRepeatText.setFocusable(false);
         habitRepeatText.setOnClickListener(this);
 
+        createHabitButton = (Button) findViewById(R.id.create_habit_button);
+        createHabitButton.setOnClickListener(this);
+
     }
 
     /**
@@ -47,16 +55,27 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
      * it would create a habit object, and save it to a json
      * file
      *
-     * @param view whatever
      */
-    protected void createHabit(View view) {
+    protected void createHabit() {
         Intent intent = new Intent(this, MainActivity.class);
         // Get habit name from user input
         String habitName = habitNameText.getText().toString();
+        // init Calendar object
+        newHabitDate = new GregorianCalendar(mYear, mMonth, mDay);
         if (habitName.isEmpty()) {
-
+            habitNameText.setError("Habit name is empty!");
+        } else {
+            try {
+                newHabit = new ToDoHabit(habitName, newHabitDate, daySelected);
+                //newHabit.saveHabitToFile();
+                JsonFileHelper jsonFile = new JsonFileHelper(this);
+                jsonFile.saveInFile(newHabit);
+                startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException();
+            }
         }
-        startActivity(intent);
     }
 
     /**
@@ -68,7 +87,8 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
-
+        // prefill with current date
+        habitDateText.setHint(mYear + "-" + mMonth + "-" + mDay);
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 new DatePickerDialog.OnDateSetListener() {
 
@@ -76,7 +96,7 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
 
-                        habitDateText.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                        habitDateText.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
 
                     }
                 }, mYear, mMonth, mDay);
@@ -107,9 +127,8 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK, so save the mSelectedItems results somewhere
-                        // or return them to the component that opened the dialog
-
+                        // print selected day of text field
+                        habitRepeatText.setText(daySelected.toString().replace("[", "").replace("]", ""));
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -134,6 +153,8 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
             openDatePickerDialog();
         } else if (view == habitRepeatText) {
             openRepeatDayPickerDialog();
+        } else if (view == createHabitButton) {
+            createHabit();
         }
     }
 }
