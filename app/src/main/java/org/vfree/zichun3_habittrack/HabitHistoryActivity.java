@@ -46,7 +46,7 @@ public class HabitHistoryActivity extends AppCompatActivity {
                 String habitName = parent.getItemAtPosition(position).toString();
                 Habit habit = findHabit(habitName);
                 if (habit.getHabitCompletion().isEmpty()) {
-                    openUncompletedAlertDialog();
+                    openUncompletedAlertDialog(habit);
                 } else {
                     openHabitCompletionsDialog(habit);
                 }
@@ -100,12 +100,21 @@ public class HabitHistoryActivity extends AppCompatActivity {
                     }
                 })
                 // Set the action buttons
+                // delete selected habit button
                 .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         deleteHabitCompletion(habit);
                     }
                 })
+                // delete habit button
+                .setNeutralButton("DELETE Habit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteHabit(habit);
+                    }
+                })
+                // cancel button
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
@@ -118,12 +127,19 @@ public class HabitHistoryActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void openUncompletedAlertDialog() {
+    private void openUncompletedAlertDialog(final Habit habit) {
         AlertDialog.Builder builder = new AlertDialog.Builder(HabitHistoryActivity.this);
         builder.setTitle("This habit has not been completed yet")
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                // delete habit button
+                .setPositiveButton("DELETE Habit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteHabit(habit);
                     }
                 });
         AlertDialog dialog = builder.create();
@@ -166,6 +182,12 @@ public class HabitHistoryActivity extends AppCompatActivity {
         toDeleteCompletion.clear();
         habitList = jsonFile.loadAllFile();
         adapter.notifyDataSetChanged();
+        recreate();
+    }
+
+    private void deleteHabit(Habit habit) {
+        JsonFileHelper jsonFile = new JsonFileHelper(this);
+        jsonFile.deleteFile(habit);
         recreate();
     }
 }
