@@ -82,8 +82,9 @@ public class MainActivity extends AppCompatActivity {
         loadAllHabit();
         //loadFromFile();
         // for testing only, delete everything
-//        JsonFileHelper jsonFile = new JsonFileHelper(this);
-//        jsonFile.deleteAllFile();
+        //JsonFileHelper jsonFile = new JsonFileHelper(this);
+        //jsonFile.deleteAllFile();
+        Log.d("debug", Arrays.toString(fileList()));
     }
 
     @Override
@@ -140,15 +141,17 @@ public class MainActivity extends AppCompatActivity {
             // consider the habit which is finished within today
             // as recent completed
             Calendar current = Calendar.getInstance();
+            Log.d("debug", "size of habitList" + habitList.size());
             for(Habit habit : habitList) {
                 //Log.d("debug", habit.toString());
-
+                Gson gson = new Gson();
+                Log.d("debug", gson.toJson(habit));
                 // if the habit should be done today
                 if (habit.getHabitOccurance().contains(current.getDisplayName
                         (Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.CANADA))) {
                     //Log.d("debug", "contains");
                     if (habit.getHabitCompletion().isEmpty()) {
-                        //Log.d("debug", habit.getHabitName());
+                        Log.d("debug", "todo " + habit.getHabitName());
                         toDoHabitList.add(habit);
                     } else {
                         for (Calendar date : habit.getHabitCompletion()) {
@@ -156,13 +159,17 @@ public class MainActivity extends AppCompatActivity {
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd");
                             // if the habit has been fullfiled today
                             if (sdf.format(date.getTime()).equals(sdf.format(current.getTime()))) {
+                                Log.d("debug", "recent completeed " + habit.toString());
                                 recentCompleteHabitList.add(habit);
+                                break;
                             }
                         }
                     }
 
                 }
             }
+            //Log.d("debug", "recent completed list" + recentCompleteHabitList.toString());
+            //Log.d("debug", "todo list" + toDoHabitList.toString());
         }
     }
 
@@ -225,9 +232,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void addCompletionToHabit(String habitName) {
         Habit habit = findHabitFromHabitList(habitName);
+        Calendar current = Calendar.getInstance();
+        habit.addHabitCompletion(current);
         JsonFileHelper jsonFile = new JsonFileHelper(this);
         jsonFile.saveInFile(habit);
+        habitList.clear();
+        recentCompleteHabitList.clear();
+        toDoHabitList.clear();
         loadAllHabit();
+
         recentCompletedHabitAdapter.notifyDataSetChanged();
         toDoHabitAdapter.notifyDataSetChanged();
     }

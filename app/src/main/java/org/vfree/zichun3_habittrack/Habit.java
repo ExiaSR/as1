@@ -34,7 +34,7 @@ public abstract class Habit{
         // if date is not given, default is current date
         this.habitName = habitName;
         this.date = Calendar.getInstance();
-        this.createdDate = Calendar.getInstance();
+        //this.createdDate = Calendar.getInstance();
     }
 
     /**
@@ -54,7 +54,7 @@ public abstract class Habit{
         // set date to the given date
         this.habitName = habitName;
         this.date = date;
-        this.createdDate = Calendar.getInstance();
+        //this.createdDate = Calendar.getInstance();
     }
 
     /**
@@ -72,7 +72,18 @@ public abstract class Habit{
         }
         this.habitName = habitName;
         this.date = date;
-        this.createdDate = Calendar.getInstance();
+        //this.createdDate = Calendar.getInstance();
+        this.habitOccurance = habitOccurrence;
+    }
+
+    public Habit(String habitName, Calendar date, ArrayList<String> habitOccurrence, Calendar createdDate)
+            throws InvalidHabitException{
+        if (habitName.isEmpty()) {
+            throw new InvalidHabitException();
+        }
+        this.habitName = habitName;
+        this.date = date;
+        this.createdDate = createdDate;
         this.habitOccurance = habitOccurrence;
     }
 
@@ -85,7 +96,7 @@ public abstract class Habit{
         // set date to the given date
         this.habitName = habitName;
         this.date = date;
-        this.createdDate = Calendar.getInstance();
+        //this.createdDate = Calendar.getInstance();
         this.habitOccurance = habitOccurance;
         this.habitFailure = habitFailure;
     }
@@ -109,7 +120,7 @@ public abstract class Habit{
         // set date to the given date
         this.habitName = habitName;
         this.date = date;
-        this.createdDate = Calendar.getInstance();
+        //this.createdDate = Calendar.getInstance();
         this.habitOccurance = habitOccurance;
         this.habitCompletion = habitCompletion;
         this.habitFailure = habitFailure;
@@ -177,6 +188,10 @@ public abstract class Habit{
 
     public void setHabitFailure(ArrayList<Calendar> habitFailure) {
         this.habitFailure = habitFailure;
+    }
+
+    public void addHabitCompletion(Calendar date) {
+        this.habitCompletion.add(date);
     }
 
     public Calendar getCreatedDate() {

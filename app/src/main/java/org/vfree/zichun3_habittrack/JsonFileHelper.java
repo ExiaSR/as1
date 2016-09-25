@@ -109,4 +109,10 @@ public class JsonFileHelper {
     protected String[] getFileList() {
         return context.fileList();
     }
+
+    protected String printObject(Habit habit) {
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(habit);
+        return jsonStr;
+    }
 }
