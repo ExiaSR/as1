@@ -90,6 +90,11 @@ public class JsonFileHelper {
         }
     }
 
+    protected void deleteFile(Habit habit) {
+        String fileName = generateFileName(habit);
+        context.deleteFile(fileName);
+    }
+
     /**
      * Using timestamp as each habit's file name
      * since the chance of two file being
