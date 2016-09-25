@@ -21,12 +21,12 @@
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
     <array name="day_selector">
+        <item>Sunday</item>
         <item>Monday</item>
         <item>Tuesday</item>
         <item>Wednesday</item>
         <item>Thursday</item>
         <item>Friday</item>
         <item>Saturday</item>
-        <item>Sunday</item>
     </array>
 </resources>

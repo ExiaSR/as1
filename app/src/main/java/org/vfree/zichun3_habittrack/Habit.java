@@ -11,9 +11,9 @@ public abstract class Habit{
     private String habitName;
     private Calendar date;
     private Calendar createdDate;
-    private ArrayList<String> habitOccurance;
-    private ArrayList<Calendar> habitCompletion;
-    private ArrayList<Calendar> habitFailure;
+    private ArrayList<String> habitOccurance = new ArrayList<>();
+    private ArrayList<Calendar> habitCompletion = new ArrayList<>();
+    private ArrayList<Calendar> habitFailure = new ArrayList<>();
 
     /**
      * constructor when user only specify the habit name
@@ -21,6 +21,9 @@ public abstract class Habit{
      * @param habitName
      * @throws InvalidHabitException
      */
+    public Habit() {
+
+    }
     public Habit(String habitName) throws InvalidHabitException {
         // if habitName is not given
         if (habitName.isEmpty()) {
@@ -71,6 +74,20 @@ public abstract class Habit{
         this.date = date;
         this.createdDate = Calendar.getInstance();
         this.habitOccurance = habitOccurrence;
+    }
+
+    public Habit(String habitName, Calendar date, ArrayList<String> habitOccurance, ArrayList<Calendar> habitFailure) throws InvalidHabitException{
+        if (habitName.isEmpty()) {
+            throw new InvalidHabitException();
+        }
+
+        // set habitName
+        // set date to the given date
+        this.habitName = habitName;
+        this.date = date;
+        this.createdDate = Calendar.getInstance();
+        this.habitOccurance = habitOccurance;
+        this.habitFailure = habitFailure;
     }
 
     /**
@@ -166,7 +183,8 @@ public abstract class Habit{
         return createdDate;
     }
 
-    public void setCreatedDate(Calendar createdDate) {
-        this.createdDate = createdDate;
+    @Override
+    public String toString() {
+        return this.habitName;
     }
 }

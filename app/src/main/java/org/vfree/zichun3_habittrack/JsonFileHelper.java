@@ -35,15 +35,16 @@ public class JsonFileHelper {
      * @return an ArrayList content all past habit
      */
     protected ArrayList<Habit> loadAllFile() {
-        Gson gson = new Gson();
+        //Gson gson = new Gson();
         ArrayList<Habit> habitList = new ArrayList<>();
-        Habit habitBuffer;
+        NormalHabit habitBuffer;
         String[] fileList = getFileList();
-        for (String fileName : fileList) {
+        for (int i = 1; i < fileList.length; ++i) {
             try {
-                FileInputStream fis = context.openFileInput(fileName);
+                Gson gson = new Gson();
+                FileInputStream fis = context.openFileInput(fileList[i]);
                 BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-                habitBuffer = gson.fromJson(in, Habit.class);
+                habitBuffer = gson.fromJson(in, NormalHabit.class);
                 habitList.add(habitBuffer);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -62,12 +63,15 @@ public class JsonFileHelper {
      * @param habit habit to be saved
      */
     protected void saveInFile(Habit habit) {
-        Gson gson = new Gson();
+        //Gson gson = new Gson();
         // serialize habit object into json string
-        String jsonStr = gson.toJson(habit);
+//        String jsonStr = gson.toJson(habit);
         try  {
+            Gson gson = new Gson();
+            String jsonStr = gson.toJson(habit);
+            Log.d("habit", jsonStr);
             // write json string into corresponding file
-            FileOutputStream fos = context.openFileOutput(generateFileName(habit), Context.MODE_APPEND);
+            FileOutputStream fos = context.openFileOutput(generateFileName(habit), 0);
             fos.write(jsonStr.getBytes());
             fos.close();
         } catch (FileNotFoundException e) {
@@ -76,6 +80,13 @@ public class JsonFileHelper {
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException();
+        }
+    }
+
+    protected void deleteAllFile() {
+        String[] fileList = getFileList();
+        for (int i = 1; i < fileList.length; ++i) {
+            context.deleteFile(fileList[i]);
         }
     }
 

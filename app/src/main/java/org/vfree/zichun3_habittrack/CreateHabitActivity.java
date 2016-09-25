@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -26,8 +27,9 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
     private Button createHabitButton;
     private int mYear, mMonth, mDay;
     private DatePickerDialog datePickerDialog;
-    final String[] daySelector = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
-    private ArrayList<String> daySelected;
+    final String[] daySelector = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+    private ArrayList<String> daySelected = new ArrayList<>();
+    private ArrayList<Habit> habitList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,14 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
         newHabitDate = new GregorianCalendar(mYear, mMonth, mDay);
         if (habitName.isEmpty()) {
             habitNameText.setError("Habit name is empty!");
-        } else {
+        }
+        else if (checkHabitName(habitName)) {
+            habitNameText.setError("Habit name has been taken!");
+        }
+        else if (daySelected.isEmpty()) {
+            habitRepeatText.setError("Habit occurence is empty!");
+        }
+        else {
             try {
                 newHabit = new ToDoHabit(habitName, newHabitDate, daySelected);
                 //newHabit.saveHabitToFile();
@@ -156,5 +165,23 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
         } else if (view == createHabitButton) {
             createHabit();
         }
+    }
+
+    /**
+     * Check if the habit name has been taken or not
+     *
+     * @param habitName
+     * @return  true -> habit name already exist
+     *          flase -> habit name does not exist
+     */
+    private Boolean checkHabitName(String habitName) {
+        JsonFileHelper jsonFile = new JsonFileHelper(this);
+        habitList = jsonFile.loadAllFile();
+        for (Habit habit : habitList) {
+            if (habitName.equals(habit.getHabitName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
