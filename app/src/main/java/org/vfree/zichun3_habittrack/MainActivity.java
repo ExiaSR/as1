@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
     private Habit findHabitFromHabitList(String habitName) {
         Habit habit = new NormalHabit();
         for (Habit habitTmp : habitList) {
-            if (habitTmp.getHabitName() == habitName) {
+            if (habitTmp.getHabitName().equals(habitName)) {
                 habit = habitTmp;
                 break;
             }
