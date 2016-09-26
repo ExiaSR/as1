@@ -71,6 +71,12 @@ public class HabitHistoryActivity extends AppCompatActivity {
         habitHistoryListView.setAdapter(adapter);
     }
 
+    /**
+     * find habit object from habitList
+     *
+     * @param habitName habit name
+     * @return habit object
+     */
     private Habit findHabit(String habitName) {
         Habit habit = new NormalHabit();
         for (Habit habitTmp : habitList) {

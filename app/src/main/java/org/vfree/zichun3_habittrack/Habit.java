@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Abstract class of Habit
+ * provide all the attributes
+ */
 public abstract class Habit{
     private String habitName;
     private Calendar date;

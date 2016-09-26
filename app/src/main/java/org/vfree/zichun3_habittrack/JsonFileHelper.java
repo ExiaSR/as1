@@ -83,6 +83,10 @@ public class JsonFileHelper {
         }
     }
 
+    /**
+     * Delete all local file
+     * for testing only
+     */
     protected void deleteAllFile() {
         String[] fileList = getFileList();
         for (int i = 1; i < fileList.length; ++i) {
@@ -96,12 +100,12 @@ public class JsonFileHelper {
     }
 
     /**
-     * Using timestamp as each habit's file name
+     * Using timestamp when file is created as each habit's file name
      * since the chance of two file being
      * creating at same the time as impossible
      *
      * @param habit habit object
-     * @return
+     * @return filename
      */
     private String generateFileName(Habit habit) {
 
@@ -110,7 +114,11 @@ public class JsonFileHelper {
         return sdf.format(habit.getCreatedDate().getTime()) + ".json";
     }
 
-    // get all private insternal storage files' name
+    /**
+     * get a list of local files
+     *
+     * @return an array that contain file names
+     */
     protected String[] getFileList() {
         return context.fileList();
     }

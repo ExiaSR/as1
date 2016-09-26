@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -49,6 +50,7 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
 
         createHabitButton = (Button) findViewById(R.id.create_habit_button);
         createHabitButton.setOnClickListener(this);
+
 
     }
 
