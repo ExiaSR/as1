@@ -52,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         recentCompletedHabitListView = (ListView) findViewById(R.id.main_activity_recent_completed_list);
         toDoHabitListView = (ListView) findViewById(R.id.main_activity_todo_list);
 
+        // enable click event for ListView item
+        // when it's click, a dialog will popup
+        // user may click confirm to complete the habit
         recentCompletedHabitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -84,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         // for testing only, delete everything
         //JsonFileHelper jsonFile = new JsonFileHelper(this);
         //jsonFile.deleteAllFile();
-        Log.d("debug", Arrays.toString(fileList()));
+        //Log.d("debug", Arrays.toString(fileList()));
     }
 
     @Override
@@ -141,17 +144,17 @@ public class MainActivity extends AppCompatActivity {
             // consider the habit which is finished within today
             // as recent completed
             Calendar current = Calendar.getInstance();
-            Log.d("debug", "size of habitList" + habitList.size());
+            //Log.d("debug", "size of habitList" + habitList.size());
             for(Habit habit : habitList) {
                 //Log.d("debug", habit.toString());
-                Gson gson = new Gson();
-                Log.d("debug", gson.toJson(habit));
+                //Gson gson = new Gson();
+                //Log.d("debug", gson.toJson(habit));
                 // if the habit should be done today
                 if (habit.getHabitOccurance().contains(current.getDisplayName
                         (Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.CANADA))) {
                     //Log.d("debug", "contains");
                     if (habit.getHabitCompletion().isEmpty()) {
-                        Log.d("debug", "todo " + habit.getHabitName());
+                        //Log.d("debug", "todo " + habit.getHabitName());
                         toDoHabitList.add(habit);
                     } else {
                         for (Calendar date : habit.getHabitCompletion()) {
@@ -159,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd");
                             // if the habit has been fullfiled today
                             if (sdf.format(date.getTime()).equals(sdf.format(current.getTime()))) {
-                                Log.d("debug", "recent completeed " + habit.toString());
+                                //Log.d("debug", "recent completeed " + habit.toString());
                                 recentCompleteHabitList.add(habit);
                                 break;
                             }
@@ -173,6 +176,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * load all objects into habitList
+     */
     private void loadFromFile() {
         String[] fileList = fileList();
         try {
@@ -195,6 +201,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Find corespond habit object from habitList
+     *
+     * @param habitName
+     * @return habit object
+     */
     private Habit findHabitFromHabitList(String habitName) {
         Habit habit = new NormalHabit();
         for (Habit habitTmp : habitList) {
@@ -206,6 +218,11 @@ public class MainActivity extends AppCompatActivity {
         return habit;
     }
 
+    /**
+     * Open a dialog to promot user to confirm habit is done
+     *
+     * @param habitName
+     */
     private void openConfirmCompleteDialog(final String habitName) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Confirm habit is completed")
@@ -229,13 +246,35 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
-
+    /**
+     * Add completion timestamp to habit completionlist
+     * keep record
+     * and then reload all corepond adapter and lists
+     *
+     * @param habitName habit name
+     */
     private void addCompletionToHabit(String habitName) {
         Habit habit = findHabitFromHabitList(habitName);
         Calendar current = Calendar.getInstance();
         habit.addHabitCompletion(current);
         JsonFileHelper jsonFile = new JsonFileHelper(this);
         jsonFile.saveInFile(habit);
+        habitList.clear();
+        recentCompleteHabitList.clear();
+        toDoHabitList.clear();
+        loadAllHabit();
+
+        recentCompletedHabitAdapter.notifyDataSetChanged();
+        toDoHabitAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Reload files to refresh this activity when user
+     * press back buttom
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
         habitList.clear();
         recentCompleteHabitList.clear();
         toDoHabitList.clear();
