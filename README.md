@@ -1,8 +1,20 @@
 # HabitTracker
 Assignment 1 of CMPUT 301 at U of A
 
-# Video URL
+# Setup
+* Android Studio
+* Sdk API 23
+* minSdkVersion 18
+* BuildToolsVersion 22.0.1
+* Support library v7.23.4
+* Gson v2.7
 
+# Notes
+* This app is backward compatible till API 18.
+* At the create habit activity, there is no need to specify the date (the default timestamp is today) unless you want a different date
+
+# Video URL
+[Youtube](https://youtu.be/luK7AtSaIbU)
 
 # Credits
 * [GSON](https://github.com/google/gson) -- A Java Json library
