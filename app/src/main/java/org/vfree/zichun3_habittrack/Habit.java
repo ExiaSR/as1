@@ -1,20 +1,15 @@
 package org.vfree.zichun3_habittrack;
 
-import android.text.BoringLayout;
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
- * Abstract class of Habit
- * provide all the attributes
+ * Abstract class of Habit provide all the attributes
  */
-public abstract class Habit{
+public abstract class Habit {
     private String habitName;
     private Calendar date;
-    private Calendar createdDate;
+    private Calendar createdDate; // timestamp when the file is created
     private ArrayList<String> habitOccurance = new ArrayList<>();
     private ArrayList<Calendar> habitCompletion = new ArrayList<>();
     private ArrayList<Calendar> habitFailure = new ArrayList<>();
@@ -22,12 +17,12 @@ public abstract class Habit{
     /**
      * constructor when user only specify the habit name
      *
-     * @param habitName
-     * @throws InvalidHabitException
+     * @param habitName habit name
      */
     public Habit() {
 
     }
+
     public Habit(String habitName) throws InvalidHabitException {
         // if habitName is not given
         if (habitName.isEmpty()) {
@@ -45,8 +40,7 @@ public abstract class Habit{
      * constructor when user specify the habit name and date
      *
      * @param habitName user specify habit name
-     * @param date user specify start date
-     * @throws InvalidHabitException
+     * @param date      user specify start date
      */
     public Habit(String habitName, Calendar date) throws InvalidHabitException {
         // if habitName is not given
@@ -64,13 +58,12 @@ public abstract class Habit{
     /**
      * Constructor when user specify habit name, date, and event repeat occurance
      *
-     * @param habitName user specify habit name
-     * @param date user specify start date
+     * @param habitName       user specify habit name
+     * @param date            user specify start date
      * @param habitOccurrence user specify event occurance
-     * @throws InvalidHabitException
      */
     public Habit(String habitName, Calendar date, ArrayList<String> habitOccurrence)
-            throws InvalidHabitException{
+            throws InvalidHabitException {
         if (habitName.isEmpty()) {
             throw new InvalidHabitException();
         }
@@ -81,7 +74,7 @@ public abstract class Habit{
     }
 
     public Habit(String habitName, Calendar date, ArrayList<String> habitOccurrence, Calendar createdDate)
-            throws InvalidHabitException{
+            throws InvalidHabitException {
         if (habitName.isEmpty()) {
             throw new InvalidHabitException();
         }
@@ -91,7 +84,7 @@ public abstract class Habit{
         this.habitOccurance = habitOccurrence;
     }
 
-    public Habit(String habitName, Calendar date, ArrayList<String> habitOccurance, ArrayList<Calendar> habitFailure) throws InvalidHabitException{
+    public Habit(String habitName, Calendar date, ArrayList<String> habitOccurance, ArrayList<Calendar> habitFailure) throws InvalidHabitException {
         if (habitName.isEmpty()) {
             throw new InvalidHabitException();
         }
@@ -106,16 +99,15 @@ public abstract class Habit{
     }
 
     /**
-     *
-     * @param habitName user specify habit name
-     * @param date user specify start date
-     * @param habitOccurance user specify event ouccrance
+     * @param habitName       user specify habit name
+     * @param date            user specify start date
+     * @param habitOccurance  user specify event ouccrance
      * @param habitCompletion a list of tiemstamp that user complete the habit
-     * @param habitFailure a list of timestamp that user fail to complete the habit
+     * @param habitFailure    a list of timestamp that user fail to complete the habit
      * @throws InvalidHabitException if habit name is not specify
      */
     public Habit(String habitName, Calendar date, ArrayList<String> habitOccurance,
-                 ArrayList<Calendar> habitCompletion, ArrayList<Calendar> habitFailure) throws InvalidHabitException{
+                 ArrayList<Calendar> habitCompletion, ArrayList<Calendar> habitFailure) throws InvalidHabitException {
         if (habitName.isEmpty()) {
             throw new InvalidHabitException();
         }

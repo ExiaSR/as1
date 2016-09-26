@@ -1,8 +1,6 @@
 package org.vfree.zichun3_habittrack;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,7 +21,6 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -126,13 +123,16 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+        if (id == R.id.action_acknowledgments) {
+            // maybe add a license dialog
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
     /**
-     * load all saved habit from json file
-     * and catagorized them into RecentCompletedHabit
-     * and ToDoHabit
+     * load all saved habit from json file and catagorized them into RecentCompletedHabit and
+     * ToDoHabit
      */
     private void loadAllHabit() {
         //JsonFileHelper jsonFile = new JsonFileHelper(this);
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             // as recent completed
             Calendar current = Calendar.getInstance();
             //Log.d("debug", "size of habitList" + habitList.size());
-            for(Habit habit : habitList) {
+            for (Habit habit : habitList) {
                 //Log.d("debug", habit.toString());
                 //Gson gson = new Gson();
                 //Log.d("debug", gson.toJson(habit));
@@ -204,7 +204,6 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Find corespond habit object from habitList
      *
-     * @param habitName
      * @return habit object
      */
     private Habit findHabitFromHabitList(String habitName) {
@@ -220,8 +219,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Open a dialog to promot user to confirm habit is done
-     *
-     * @param habitName
      */
     private void openConfirmCompleteDialog(final String habitName) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -247,9 +244,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Add completion timestamp to habit completionlist
-     * keep record
-     * and then reload all corepond adapter and lists
+     * Add completion timestamp to habit completionlist keep record and then reload all corepond
+     * adapter and lists
      *
      * @param habitName habit name
      */
@@ -269,8 +265,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Reload files to refresh this activity when user
-     * press back buttom
+     * Reload files to refresh this activity when user press back buttom
      */
     @Override
     protected void onResume() {

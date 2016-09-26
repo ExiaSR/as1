@@ -1,28 +1,22 @@
 package org.vfree.zichun3_habittrack;
 
+import com.google.gson.Gson;
+
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.google.gson.Gson;
 /**
  * List all habit in this activity
  */
@@ -92,9 +86,9 @@ public class HabitHistoryActivity extends AppCompatActivity {
         List<CharSequence> completionList = new ArrayList<>();
         completionList = getCompletionList(habit);
         AlertDialog.Builder builder = new AlertDialog.Builder(HabitHistoryActivity.this);
+        // indicate amount of completion and failure
         builder.setTitle("Completed: " + habit.getHabitCompletion().size() + " Failed: " + habit.getHabitFailure().size())
-                // Specify the list array, the items to be selected by default (null for none),
-                // and the listener through which to receive callbacks when items are selected
+                // add index of selected item to arraylist
                 .setMultiChoiceItems(completionList.toArray(new CharSequence[completionList.size()]), null, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
@@ -161,7 +155,7 @@ public class HabitHistoryActivity extends AppCompatActivity {
                 Log.d("debug", habit.toString() + sdf.format(date.getTime()));
                 completionList.add(sdf.format(date.getTime()));
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return completionList;

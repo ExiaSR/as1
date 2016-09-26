@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class CreateHabitActivity extends AppCompatActivity implements View.OnClickListener{
+public class CreateHabitActivity extends AppCompatActivity implements View.OnClickListener {
     private Habit newHabit;
     private Calendar newHabitDate;
     private EditText habitNameText;
@@ -55,10 +55,8 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
     }
 
     /**
-     * OnClick event, when user click Create Habit button
-     * it would create a habit object, and save it to a json
-     * file
-     *
+     * OnClick event, when user click Create Habit button it would create a habit object, and save
+     * it to a json file
      */
     protected void createHabit() {
         Intent intent = new Intent(this, MainActivity.class);
@@ -66,16 +64,16 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
         String habitName = habitNameText.getText().toString();
         // init Calendar object
         newHabitDate = new GregorianCalendar(mYear, mMonth, mDay);
+        // if habit name is not given
         if (habitName.isEmpty()) {
             habitNameText.setError("Habit name is empty!");
-        }
-        else if (checkHabitName(habitName)) {
+        } else if (checkHabitName(habitName)) {
+            // if habitname already exist
             habitNameText.setError("Habit name has been taken!");
-        }
-        else if (daySelected.isEmpty()) {
+        } else if (daySelected.isEmpty()) {
+            // if day repeat is not specify
             habitRepeatText.setError("Habit occurence is empty!");
-        }
-        else {
+        } else {
             try {
                 Calendar current = Calendar.getInstance();
                 newHabit = new ToDoHabit(habitName, newHabitDate, daySelected, current);
@@ -92,7 +90,6 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
 
     /**
      * Open up a dialog for user to set start day
-     *
      */
     private void openDatePickerDialog() {
         final Calendar c = Calendar.getInstance();
@@ -117,7 +114,6 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
 
     /**
      * Open up a dialog for user to select repeat day of week
-     *
      */
     private void openRepeatDayPickerDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(CreateHabitActivity.this);
@@ -157,11 +153,12 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
 
     /**
      * onClick event for EditText
+     *
      * @param view ID
      */
     @Override
     public void onClick(View view) {
-        if (view == habitDateText ) {
+        if (view == habitDateText) {
             openDatePickerDialog();
         } else if (view == habitRepeatText) {
             openRepeatDayPickerDialog();
@@ -173,9 +170,7 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
     /**
      * Check if the habit name has been taken or not
      *
-     * @param habitName
-     * @return  true -> habit name already exist
-     *          flase -> habit name does not exist
+     * @return true -> habit name already exist flase -> habit name does not exist
      */
     private Boolean checkHabitName(String habitName) {
         JsonFileHelper jsonFile = new JsonFileHelper(this);
