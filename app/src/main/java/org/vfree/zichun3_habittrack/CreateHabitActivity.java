@@ -21,7 +21,7 @@ import java.util.GregorianCalendar;
 
 public class CreateHabitActivity extends AppCompatActivity implements View.OnClickListener {
     private Habit newHabit;
-    private Calendar newHabitDate;
+    private Calendar newHabitDate = Calendar.getInstance();
     private EditText habitNameText;
     private EditText habitDateText;
     private EditText habitRepeatText;
@@ -51,8 +51,27 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
         createHabitButton = (Button) findViewById(R.id.create_habit_button);
         createHabitButton.setOnClickListener(this);
 
+        habitDateText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(CreateHabitActivity.this, onDateSetListener,
+                        newHabitDate.get(Calendar.YEAR), newHabitDate.get(Calendar.MONTH),
+                        newHabitDate.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
     }
+
+    DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            newHabitDate.set(Calendar.YEAR, year);
+            newHabitDate.set(Calendar.MONTH, monthOfYear);
+            newHabitDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            habitDateText.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+            Log.d("debug", year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+        }
+    };
 
     /**
      * OnClick event, when user click Create Habit button it would create a habit object, and save
@@ -63,7 +82,7 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
         // Get habit name from user input
         String habitName = habitNameText.getText().toString();
         // init Calendar object
-        newHabitDate = new GregorianCalendar(mYear, mMonth, mDay);
+        //newHabitDate = new GregorianCalendar(mYear, mMonth, mDay);
         // if habit name is not given
         if (habitName.isEmpty()) {
             habitNameText.setError("Habit name is empty!");
@@ -88,29 +107,32 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    /**
-     * Open up a dialog for user to set start day
-     */
-    private void openDatePickerDialog() {
-        final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
-        // prefill with current date
-        habitDateText.setHint(mYear + "-" + mMonth + "-" + mDay);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                new DatePickerDialog.OnDateSetListener() {
-
-                    @Override
-                    public void onDateSet(DatePicker view, int year,
-                                          int monthOfYear, int dayOfMonth) {
-
-                        habitDateText.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-
-                    }
-                }, mYear, mMonth, mDay);
-        datePickerDialog.show();
-    }
+//    /**
+//     * Open up a dialog for user to set start day
+//     */
+//    private void openDatePickerDialog() {
+//        final Calendar c = Calendar.getInstance();
+//        mYear = c.get(Calendar.YEAR);
+//        mMonth = c.get(Calendar.MONTH);
+//        mDay = c.get(Calendar.DAY_OF_MONTH);
+//        Log.d("debug", "default " + mYear + "-" + mMonth + "-" + mDay);
+//        // prefill with current date
+//        habitDateText.setHint(mYear + "-" + mMonth + "-" + mDay);
+//
+//        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+//                new DatePickerDialog.OnDateSetListener() {
+//
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year,
+//                                          int monthOfYear, int dayOfMonth) {
+//
+//                        habitDateText.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+//                        Log.d("set", year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+//                    }
+//                }, mYear, mMonth, mDay);
+//
+//        datePickerDialog.show();
+//    }
 
     /**
      * Open up a dialog for user to select repeat day of week
@@ -158,9 +180,10 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
      */
     @Override
     public void onClick(View view) {
-        if (view == habitDateText) {
-            openDatePickerDialog();
-        } else if (view == habitRepeatText) {
+//        if (view == habitDateText) {
+//            openDatePickerDialog();
+//        } else
+        if (view == habitRepeatText) {
             openRepeatDayPickerDialog();
         } else if (view == createHabitButton) {
             createHabit();
