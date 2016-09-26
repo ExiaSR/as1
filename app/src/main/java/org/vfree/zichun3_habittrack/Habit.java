@@ -37,25 +37,6 @@ public abstract class Habit {
     }
 
     /**
-     * constructor when user specify the habit name and date
-     *
-     * @param habitName user specify habit name
-     * @param date      user specify start date
-     */
-    public Habit(String habitName, Calendar date) throws InvalidHabitException {
-        // if habitName is not given
-        if (habitName.isEmpty()) {
-            throw new InvalidHabitException();
-        }
-
-        // set habitName
-        // set date to the given date
-        this.habitName = habitName;
-        this.date = date;
-        //this.createdDate = Calendar.getInstance();
-    }
-
-    /**
      * Constructor when user specify habit name, date, and event repeat occurance
      *
      * @param habitName       user specify habit name
@@ -73,6 +54,15 @@ public abstract class Habit {
         this.habitOccurance = habitOccurrence;
     }
 
+    /**
+     * Constructor
+     *
+     * @param habitName
+     * @param date
+     * @param habitOccurrence
+     * @param createdDate
+     * @throws InvalidHabitException
+     */
     public Habit(String habitName, Calendar date, ArrayList<String> habitOccurrence, Calendar createdDate)
             throws InvalidHabitException {
         if (habitName.isEmpty()) {
@@ -84,6 +74,14 @@ public abstract class Habit {
         this.habitOccurance = habitOccurrence;
     }
 
+    /**
+     * Constructor
+     * @param habitName
+     * @param date
+     * @param habitOccurance
+     * @param habitFailure
+     * @throws InvalidHabitException
+     */
     public Habit(String habitName, Calendar date, ArrayList<String> habitOccurance, ArrayList<Calendar> habitFailure) throws InvalidHabitException {
         if (habitName.isEmpty()) {
             throw new InvalidHabitException();
@@ -93,10 +91,10 @@ public abstract class Habit {
         // set date to the given date
         this.habitName = habitName;
         this.date = date;
-        //this.createdDate = Calendar.getInstance();
         this.habitOccurance = habitOccurance;
         this.habitFailure = habitFailure;
     }
+
 
     /**
      * @param habitName       user specify habit name
@@ -135,15 +133,6 @@ public abstract class Habit {
         }
     }
 
-    /**
-     * Keep a record of habit completed timestamp
-     *
-     * @param time when user is done with a habit
-     */
-    public void habitCompleted(Calendar time) {
-        this.habitCompletion.add(time);
-    }
-
     public String getHabitName() {
         return habitName;
     }
@@ -165,13 +154,13 @@ public abstract class Habit {
         return habitFailure;
     }
 
-    public void setHabitName(String habitName) {
-        this.habitName = habitName;
-    }
+//    public void setHabitName(String habitName) {
+//        this.habitName = habitName;
+//    }
 
-    public void setDate(Calendar date) {
-        this.date = date;
-    }
+//    public void setDate(Calendar date) {
+//        this.date = date;
+//    }
 
     public void setHabitCompletion(ArrayList<Calendar> habitCompletion) {
         this.habitCompletion = habitCompletion;

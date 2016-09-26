@@ -63,7 +63,7 @@ public class JsonFileHelper {
         try {
             Gson gson = new Gson();
             String jsonStr = gson.toJson(habit);
-            Log.d("habit", jsonStr);
+            //Log.d("habit", jsonStr);
             // write json string into corresponding file
             FileOutputStream fos = context.openFileOutput(generateFileName(habit), 0);
             fos.write(jsonStr.getBytes());

@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -90,8 +89,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        recentCompletedHabitAdapter = new ArrayAdapter<>(this, R.layout.habit_history_list_item, recentCompleteHabitList);
-        toDoHabitAdapter = new ArrayAdapter<>(this, R.layout.habit_history_list_item, toDoHabitList);
+        recentCompletedHabitAdapter = new ArrayAdapter<>(this, R.layout.habit_list_view_item, recentCompleteHabitList);
+        toDoHabitAdapter = new ArrayAdapter<>(this, R.layout.habit_list_view_item, toDoHabitList);
 
         recentCompletedHabitListView.setAdapter(recentCompletedHabitAdapter);
         toDoHabitListView.setAdapter(toDoHabitAdapter);

@@ -11,10 +11,6 @@ public class ToDoHabit extends Habit {
         super(habitName);
     }
 
-    public ToDoHabit(String habitName, Calendar date) throws InvalidHabitException {
-        super(habitName, date);
-    }
-
     public ToDoHabit(String habitName, Calendar date, ArrayList<String> habitOccurrence) throws InvalidHabitException {
         super(habitName, date, habitOccurrence);
     }

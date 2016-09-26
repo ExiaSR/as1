@@ -9,12 +9,20 @@ public class RecentCompletedHabit extends Habit {
         super(habitName);
     }
 
-    public RecentCompletedHabit(String habitName, Calendar date) throws InvalidHabitException {
-        super(habitName, date);
-    }
 
     public RecentCompletedHabit(String habitName, Calendar date, ArrayList<String> habitOccurrence) throws InvalidHabitException {
         super(habitName, date, habitOccurrence);
     }
 
+    public RecentCompletedHabit(String habitName, Calendar date, ArrayList<String> habitOccurance, ArrayList<Calendar> habitCompletion, ArrayList<Calendar> habitFailure) throws InvalidHabitException {
+        super(habitName, date, habitOccurance, habitCompletion, habitFailure);
+    }
+
+    public RecentCompletedHabit(String habitName, Calendar date, ArrayList<String> habitOccurance, ArrayList<Calendar> habitFailure) throws InvalidHabitException {
+        super(habitName, date, habitOccurance, habitFailure);
+    }
+
+    public RecentCompletedHabit(String habitName, Calendar date, ArrayList<String> habitOccurrence, Calendar createdDate) throws InvalidHabitException {
+        super(habitName, date, habitOccurrence, createdDate);
+    }
 }
