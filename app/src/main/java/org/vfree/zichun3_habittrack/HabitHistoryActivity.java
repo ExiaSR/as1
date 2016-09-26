@@ -60,7 +60,7 @@ public class HabitHistoryActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        adapter = new ArrayAdapter<>(this, R.layout.habit_history_list_item, habitList);
+        adapter = new ArrayAdapter<>(this, R.layout.habit_list_view_item, habitList);
         //adapter = new HabitAdapter(this, habitList);
         habitHistoryListView.setAdapter(adapter);
     }
@@ -168,9 +168,16 @@ public class HabitHistoryActivity extends AppCompatActivity {
         Gson gson = new Gson();
         Log.d("debug", gson.toJson(habit));
         Log.d("debug", "to delete index" + toDeleteCompletion.toString());
-        for (int index : toDeleteCompletion) {
-            originalCompletion.remove(index);
+        // deal with IndexOutOfRange Exception
+        // just clear the ArrayList~~
+        if (toDeleteCompletion.size() == originalCompletion.size()) {
+            originalCompletion.clear();
+        } else {
+            for (int index : toDeleteCompletion) {
+                originalCompletion.remove(index);
+            }
         }
+
         Log.d("debug", gson.toJson(habit));
         habit.setHabitCompletion(originalCompletion);
 
