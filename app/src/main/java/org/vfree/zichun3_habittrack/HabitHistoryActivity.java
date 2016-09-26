@@ -163,11 +163,11 @@ public class HabitHistoryActivity extends AppCompatActivity {
 
     private void deleteHabitCompletion(Habit habit) {
         originalCompletion = habit.getHabitCompletion();
-        Log.d("debug", "deleting record");
-        Log.d("debug", originalCompletion.toString());
-        Gson gson = new Gson();
-        Log.d("debug", gson.toJson(habit));
-        Log.d("debug", "to delete index" + toDeleteCompletion.toString());
+        //Log.d("debug", "deleting record");
+        //Log.d("debug", originalCompletion.toString());
+        //Gson gson = new Gson();
+        //Log.d("debug", gson.toJson(habit));
+        //Log.d("debug", "to delete index" + toDeleteCompletion.toString());
         // deal with IndexOutOfRange Exception
         // just clear the ArrayList~~
         if (toDeleteCompletion.size() == originalCompletion.size()) {
@@ -178,7 +178,7 @@ public class HabitHistoryActivity extends AppCompatActivity {
             }
         }
 
-        Log.d("debug", gson.toJson(habit));
+        //Log.d("debug", gson.toJson(habit));
         habit.setHabitCompletion(originalCompletion);
 
         JsonFileHelper jsonFile = new JsonFileHelper(this);
