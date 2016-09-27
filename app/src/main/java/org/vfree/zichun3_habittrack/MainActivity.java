@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
             Calendar current = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd");
             for (Habit habit : habitList) {
-
+                // magic
                 // if the habit should be done today
                 if (current.after(habit.getDate()) || sdf.format(current.getTime()).equals(habit.getDate())) {
                     if (habit.getHabitOccurance().contains(current.getDisplayName

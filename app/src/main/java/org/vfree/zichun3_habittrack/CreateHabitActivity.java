@@ -87,6 +87,7 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
         } else {
             try {
                 Calendar current = Calendar.getInstance();
+                // new a object (heyue)
                 newHabit = new ToDoHabit(habitName, newHabitDate, daySelected, current);
                 JsonFileHelper jsonFile = new JsonFileHelper(this);
                 jsonFile.saveInFile(newHabit);

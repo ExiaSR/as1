@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import android.app.Application;
 import android.test.ApplicationTestCase;
 
-import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
