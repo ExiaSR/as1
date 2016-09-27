@@ -1,6 +1,5 @@
 package org.vfree.zichun3_habittrack;
 
-import com.google.gson.Gson;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,10 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,22 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, CreateHabitActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
         loadAllHabit();
-        //loadFromFile();
-        // for testing only, delete everything
-        //JsonFileHelper jsonFile = new JsonFileHelper(this);
-        //jsonFile.deleteAllFile();
-        //Log.d("debug", Arrays.toString(fileList()));
     }
 
     @Override
@@ -134,9 +115,8 @@ public class MainActivity extends AppCompatActivity {
      * ToDoHabit
      */
     private void loadAllHabit() {
-        //JsonFileHelper jsonFile = new JsonFileHelper(this);
-        //habitList = jsonFile.loadAllFile();
-        loadFromFile();
+        JsonFileHelper jsonFile = new JsonFileHelper(this);
+        habitList = jsonFile.loadAllFile();
         // check if there is any file exist
         if (!habitList.isEmpty()) {
 
@@ -144,25 +124,18 @@ public class MainActivity extends AppCompatActivity {
             // as recent completed
             Calendar current = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd");
-            //Log.d("debug", "size of habitList" + habitList.size());
             for (Habit habit : habitList) {
-                //Log.d("debug", habit.toString());
-                //Gson gson = new Gson();
-                //Log.d("debug", gson.toJson(habit));
                 // if the habit should be done today
                 if (current.after(habit.getDate()) || sdf.format(current.getTime()).equals(habit.getDate())) {
                     if (habit.getHabitOccurance().contains(current.getDisplayName
                             (Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.CANADA))) {
-                        //Log.d("debug", "contains");
                         if (habit.getHabitCompletion().isEmpty()) {
-                            //Log.d("debug", "todo " + habit.getHabitName());
                             toDoHabitList.add(habit);
                         } else {
                             for (Calendar date : habit.getHabitCompletion()) {
                                 current = Calendar.getInstance();
                                 // if the habit has been fullfiled today
                                 if (sdf.format(date.getTime()).equals(sdf.format(current.getTime()))) {
-                                    //Log.d("debug", "recent completeed " + habit.toString());
                                     recentCompleteHabitList.add(habit);
                                     break;
                                 }
@@ -171,33 +144,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-            //Log.d("debug", "recent completed list" + recentCompleteHabitList.toString());
-            //Log.d("debug", "todo list" + toDoHabitList.toString());
-        }
-    }
-
-    /**
-     * load all objects into habitList
-     */
-    private void loadFromFile() {
-        String[] fileList = fileList();
-        try {
-            for (int i = 1; i < fileList.length; ++i) {
-                Gson gson = new Gson();//Builder().registerTypeAdapter(Habit.class, new InterfaceAdapter<>);
-                FileInputStream fis = openFileInput(fileList[i]);
-                BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-                //Type habitType = new TypeToken<Habit>(){}.getType();
-                Habit habit = gson.fromJson(in, NormalHabit.class);
-                Log.d("habit_name", habit.getHabitName());
-                habitList.add(habit);
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        } catch (Exception e) {
-            e.printStackTrace();
-            //throw new RuntimeException();
         }
     }
 
