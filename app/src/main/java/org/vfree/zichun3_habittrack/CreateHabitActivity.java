@@ -96,7 +96,6 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
             try {
                 Calendar current = Calendar.getInstance();
                 newHabit = new ToDoHabit(habitName, newHabitDate, daySelected, current);
-                //newHabit.saveHabitToFile();
                 JsonFileHelper jsonFile = new JsonFileHelper(this);
                 jsonFile.saveInFile(newHabit);
                 startActivity(intent);
@@ -106,33 +105,6 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
             }
         }
     }
-
-//    /**
-//     * Open up a dialog for user to set start day
-//     */
-//    private void openDatePickerDialog() {
-//        final Calendar c = Calendar.getInstance();
-//        mYear = c.get(Calendar.YEAR);
-//        mMonth = c.get(Calendar.MONTH);
-//        mDay = c.get(Calendar.DAY_OF_MONTH);
-//        Log.d("debug", "default " + mYear + "-" + mMonth + "-" + mDay);
-//        // prefill with current date
-//        habitDateText.setHint(mYear + "-" + mMonth + "-" + mDay);
-//
-//        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-//                new DatePickerDialog.OnDateSetListener() {
-//
-//                    @Override
-//                    public void onDateSet(DatePicker view, int year,
-//                                          int monthOfYear, int dayOfMonth) {
-//
-//                        habitDateText.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-//                        Log.d("set", year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-//                    }
-//                }, mYear, mMonth, mDay);
-//
-//        datePickerDialog.show();
-//    }
 
     /**
      * Open up a dialog for user to select repeat day of week
@@ -180,9 +152,6 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
      */
     @Override
     public void onClick(View view) {
-//        if (view == habitDateText) {
-//            openDatePickerDialog();
-//        } else
         if (view == habitRepeatText) {
             openRepeatDayPickerDialog();
         } else if (view == createHabitButton) {
