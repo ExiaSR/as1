@@ -19,6 +19,8 @@ Assignment 1 of CMPUT 301 at U of A
 # Credits
 * [GSON](https://github.com/google/gson) -- A Java Json library
 * [Android Developers](https://developer.android.com/index.html) -- Code is referenced from this website unless other specify
+* [Stackoverflow - Display two listvies in one activity](http://stackoverflow.com/questions/17693578/android-how-to-display-2-listviews-in-one-activity-one-after-the-other)
+* [Stackoverflow - Datepicker dialog](http://stackoverflow.com/questions/18267091/open-a-datepickerdialog-on-click-of-edittext-takes-two-clicks)
 
 # License
 This software is under [MIT license](https://opensource.org/licenses/MIT)
