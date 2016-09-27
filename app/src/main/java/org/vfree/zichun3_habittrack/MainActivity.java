@@ -147,11 +147,10 @@ public class MainActivity extends AppCompatActivity {
             //Log.d("debug", "size of habitList" + habitList.size());
             for (Habit habit : habitList) {
                 //Log.d("debug", habit.toString());
-                Gson gson = new Gson();
-                Log.d("debug", gson.toJson(habit));
+                //Gson gson = new Gson();
+                //Log.d("debug", gson.toJson(habit));
                 // if the habit should be done today
                 if (current.after(habit.getDate()) || sdf.format(current.getTime()).equals(habit.getDate())) {
-                    Log.d("debug", "yes");
                     if (habit.getHabitOccurance().contains(current.getDisplayName
                             (Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.CANADA))) {
                         //Log.d("debug", "contains");
