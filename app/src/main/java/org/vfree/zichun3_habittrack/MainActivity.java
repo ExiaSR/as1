@@ -143,31 +143,33 @@ public class MainActivity extends AppCompatActivity {
             // consider the habit which is finished within today
             // as recent completed
             Calendar current = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd");
             //Log.d("debug", "size of habitList" + habitList.size());
             for (Habit habit : habitList) {
                 //Log.d("debug", habit.toString());
-                //Gson gson = new Gson();
-                //Log.d("debug", gson.toJson(habit));
+                Gson gson = new Gson();
+                Log.d("debug", gson.toJson(habit));
                 // if the habit should be done today
-                if (habit.getHabitOccurance().contains(current.getDisplayName
-                        (Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.CANADA))) {
-                    //Log.d("debug", "contains");
-                    if (habit.getHabitCompletion().isEmpty()) {
-                        //Log.d("debug", "todo " + habit.getHabitName());
-                        toDoHabitList.add(habit);
-                    } else {
-                        for (Calendar date : habit.getHabitCompletion()) {
-                            current = Calendar.getInstance();
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd");
-                            // if the habit has been fullfiled today
-                            if (sdf.format(date.getTime()).equals(sdf.format(current.getTime()))) {
-                                //Log.d("debug", "recent completeed " + habit.toString());
-                                recentCompleteHabitList.add(habit);
-                                break;
+                if (current.after(habit.getDate()) || sdf.format(current.getTime()).equals(habit.getDate())) {
+                    Log.d("debug", "yes");
+                    if (habit.getHabitOccurance().contains(current.getDisplayName
+                            (Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.CANADA))) {
+                        //Log.d("debug", "contains");
+                        if (habit.getHabitCompletion().isEmpty()) {
+                            //Log.d("debug", "todo " + habit.getHabitName());
+                            toDoHabitList.add(habit);
+                        } else {
+                            for (Calendar date : habit.getHabitCompletion()) {
+                                current = Calendar.getInstance();
+                                // if the habit has been fullfiled today
+                                if (sdf.format(date.getTime()).equals(sdf.format(current.getTime()))) {
+                                    //Log.d("debug", "recent completeed " + habit.toString());
+                                    recentCompleteHabitList.add(habit);
+                                    break;
+                                }
                             }
                         }
                     }
-
                 }
             }
             //Log.d("debug", "recent completed list" + recentCompleteHabitList.toString());
