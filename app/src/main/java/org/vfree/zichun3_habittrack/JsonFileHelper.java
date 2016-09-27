@@ -72,17 +72,6 @@ public class JsonFileHelper {
         }
     }
 
-    /**
-     * Delete all local file
-     * for testing purposes only
-     */
-    protected void deleteAllFile() {
-        String[] fileList = getFileList();
-        for (int i = 1; i < fileList.length; ++i) {
-            context.deleteFile(fileList[i]);
-        }
-    }
-
     protected void deleteFile(Habit habit) {
         String fileName = generateFileName(habit);
         context.deleteFile(fileName);

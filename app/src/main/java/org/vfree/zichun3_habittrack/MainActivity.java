@@ -1,5 +1,6 @@
 package org.vfree.zichun3_habittrack;
 
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -124,17 +125,16 @@ public class MainActivity extends AppCompatActivity {
             Calendar current = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd");
             for (Habit habit : habitList) {
-                // determine whether the habit should be done on today or not
-                if (current.after(habit.getDate()) || sdf.format(current.getTime()).equals(habit.getDate().getTime())) {
+
+                // if the habit should be done today
+                if (current.after(habit.getDate()) || sdf.format(current.getTime()).equals(habit.getDate())) {
                     if (habit.getHabitOccurance().contains(current.getDisplayName
                             (Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.CANADA))) {
                         if (habit.getHabitCompletion().isEmpty()) {
-                            //Log.d("debug", "todo " + habit.getHabitName());
                             toDoHabitList.add(habit);
                         } else {
                             for (Calendar date : habit.getHabitCompletion()) {
                                 current = Calendar.getInstance();
-                                sdf = new SimpleDateFormat("yyyy MMM dd");
                                 // if the habit has been fullfiled today
                                 if (sdf.format(date.getTime()).equals(sdf.format(current.getTime()))) {
                                     recentCompleteHabitList.add(habit);
@@ -142,10 +142,8 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }
                         }
-
                     }
                 }
-
             }
         }
     }
@@ -229,8 +227,8 @@ public class MainActivity extends AppCompatActivity {
         habitList.clear();
         recentCompleteHabitList.clear();
         toDoHabitList.clear();
-        JsonFileHelper jsonFile = new JsonFileHelper(this);
-        habitList = jsonFile.loadAllFile();
+        loadAllHabit();
+
         recentCompletedHabitAdapter.notifyDataSetChanged();
         toDoHabitAdapter.notifyDataSetChanged();
     }
