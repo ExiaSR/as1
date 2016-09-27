@@ -3,21 +3,17 @@ package org.vfree.zichun3_habittrack;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class CreateHabitActivity extends AppCompatActivity implements View.OnClickListener {
     private Habit newHabit;
@@ -26,8 +22,6 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
     private EditText habitDateText;
     private EditText habitRepeatText;
     private Button createHabitButton;
-    private int mYear, mMonth, mDay;
-    private DatePickerDialog datePickerDialog;
     final String[] daySelector = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
     private ArrayList<String> daySelected = new ArrayList<>();
     private ArrayList<Habit> habitList = new ArrayList<>();
@@ -81,8 +75,6 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
         Intent intent = new Intent(this, MainActivity.class);
         // Get habit name from user input
         String habitName = habitNameText.getText().toString();
-        // init Calendar object
-        //newHabitDate = new GregorianCalendar(mYear, mMonth, mDay);
         // if habit name is not given
         if (habitName.isEmpty()) {
             habitNameText.setError("Habit name is empty!");

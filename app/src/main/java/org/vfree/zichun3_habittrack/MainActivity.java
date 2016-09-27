@@ -1,6 +1,5 @@
 package org.vfree.zichun3_habittrack;
 
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -218,8 +217,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Reload files to refresh this activity when user press back buttom
-     * from other activity
+     * Reload files to refresh this activity when user press back buttom from other activity
      */
     @Override
     protected void onResume() {
