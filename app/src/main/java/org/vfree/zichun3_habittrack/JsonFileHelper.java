@@ -31,7 +31,6 @@ public class JsonFileHelper {
      * @return an ArrayList content all past habit
      */
     protected ArrayList<Habit> loadAllFile() {
-        //Gson gson = new Gson();
         ArrayList<Habit> habitList = new ArrayList<>();
         NormalHabit habitBuffer;
         String[] fileList = getFileList();
@@ -57,13 +56,9 @@ public class JsonFileHelper {
      * @param habit habit to be saved
      */
     protected void saveInFile(Habit habit) {
-        //Gson gson = new Gson();
-        // serialize habit object into json string
-//        String jsonStr = gson.toJson(habit);
         try {
             Gson gson = new Gson();
             String jsonStr = gson.toJson(habit);
-            //Log.d("habit", jsonStr);
             // write json string into corresponding file
             FileOutputStream fos = context.openFileOutput(generateFileName(habit), 0);
             fos.write(jsonStr.getBytes());
