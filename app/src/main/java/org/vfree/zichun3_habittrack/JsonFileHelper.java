@@ -78,7 +78,8 @@ public class JsonFileHelper {
     }
 
     /**
-     * Delete all local file for testing only
+     * Delete all local file
+     * for testing purposes only
      */
     protected void deleteAllFile() {
         String[] fileList = getFileList();
@@ -93,9 +94,13 @@ public class JsonFileHelper {
     }
 
     /**
-     * Using timestamp when file is created as each habit's file name since the chance of two file
-     * being creating at same the time as impossible
+     * Using timestamp when file is created as each habit's file name
+     * since the chance of two file being creating at same the time impossible
      *
+     * Also, separate each habit object into different files
+     * provide the capability of indexing and avoid memory overflow
+     *
+     * This method return a filename of the habit object
      * @param habit habit object
      * @return filename
      */
@@ -113,11 +118,5 @@ public class JsonFileHelper {
      */
     protected String[] getFileList() {
         return context.fileList();
-    }
-
-    protected String printObject(Habit habit) {
-        Gson gson = new Gson();
-        String jsonStr = gson.toJson(habit);
-        return jsonStr;
     }
 }
