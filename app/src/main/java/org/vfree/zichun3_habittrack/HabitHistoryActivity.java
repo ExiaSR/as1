@@ -52,16 +52,12 @@ public class HabitHistoryActivity extends AppCompatActivity {
 
         JsonFileHelper jsonFile = new JsonFileHelper(this);
         habitList = jsonFile.loadAllFile();
-        // load all existing file into habit list
-        //habitList = jsonFile.loadAllFile();
-        //loadFromFile();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         adapter = new ArrayAdapter<>(this, R.layout.habit_list_view_item, habitList);
-        //adapter = new HabitAdapter(this, habitList);
         habitHistoryListView.setAdapter(adapter);
     }
 
@@ -152,7 +148,6 @@ public class HabitHistoryActivity extends AppCompatActivity {
 
             for (Calendar date : habit.getHabitCompletion()) {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-                Log.d("debug", habit.toString() + sdf.format(date.getTime()));
                 completionList.add(sdf.format(date.getTime()));
             }
         } catch (Exception e) {
@@ -163,11 +158,6 @@ public class HabitHistoryActivity extends AppCompatActivity {
 
     private void deleteHabitCompletion(Habit habit) {
         originalCompletion = habit.getHabitCompletion();
-        //Log.d("debug", "deleting record");
-        //Log.d("debug", originalCompletion.toString());
-        //Gson gson = new Gson();
-        //Log.d("debug", gson.toJson(habit));
-        //Log.d("debug", "to delete index" + toDeleteCompletion.toString());
         // deal with IndexOutOfRange Exception
         // just clear the ArrayList~~
         if (toDeleteCompletion.size() == originalCompletion.size()) {
@@ -178,7 +168,6 @@ public class HabitHistoryActivity extends AppCompatActivity {
             }
         }
 
-        //Log.d("debug", gson.toJson(habit));
         habit.setHabitCompletion(originalCompletion);
 
         JsonFileHelper jsonFile = new JsonFileHelper(this);
