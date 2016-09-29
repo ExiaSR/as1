@@ -12,15 +12,16 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class CreateHabitActivity extends AppCompatActivity implements View.OnClickListener {
     private Habit newHabit;
     private Calendar newHabitDate = Calendar.getInstance();
-    private EditText habitNameText;
-    private EditText habitDateText;
-    private EditText habitRepeatText;
+    private EditText habitNameEditText;
+    private EditText habitDateEditText;
+    private EditText habitRepeatEditText;
     private Button createHabitButton;
     final String[] daySelector = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
     private ArrayList<String> daySelected = new ArrayList<>();
@@ -32,20 +33,22 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_create_habit);
 
         // setup each EditText and their onClickListner
-        habitDateText = (EditText) findViewById(R.id.habit_date);
-        habitDateText.setFocusable(false);
-        habitDateText.setOnClickListener(this);
+        habitDateEditText = (EditText) findViewById(R.id.habit_date);
+        habitDateEditText.setFocusable(false);
+        habitDateEditText.setOnClickListener(this);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MMM-dd");
+        habitDateEditText.setHint("Date (Default: " + sdf.format(newHabitDate.getTime()) + ")");
 
-        habitNameText = (EditText) findViewById(R.id.habit_name);
+        habitNameEditText = (EditText) findViewById(R.id.habit_name);
 
-        habitRepeatText = (EditText) findViewById(R.id.habit_repeat);
-        habitRepeatText.setFocusable(false);
-        habitRepeatText.setOnClickListener(this);
+        habitRepeatEditText = (EditText) findViewById(R.id.habit_repeat);
+        habitRepeatEditText.setFocusable(false);
+        habitRepeatEditText.setOnClickListener(this);
 
         createHabitButton = (Button) findViewById(R.id.create_habit_button);
         createHabitButton.setOnClickListener(this);
 
-        habitDateText.setOnClickListener(new View.OnClickListener() {
+        habitDateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(CreateHabitActivity.this, onDateSetListener,
@@ -62,8 +65,7 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
             newHabitDate.set(Calendar.YEAR, year);
             newHabitDate.set(Calendar.MONTH, monthOfYear);
             newHabitDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            habitDateText.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-            Log.d("debug", year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+            habitDateEditText.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
         }
     };
 
@@ -74,16 +76,16 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
     protected void createHabit() {
         Intent intent = new Intent(this, MainActivity.class);
         // Get habit name from user input
-        String habitName = habitNameText.getText().toString();
+        String habitName = habitNameEditText.getText().toString();
         // if habit name is not given
         if (habitName.isEmpty()) {
-            habitNameText.setError("Habit name is empty!");
+            habitNameEditText.setError("Habit name is empty!");
         } else if (checkHabitName(habitName)) {
             // if habitname already exist
-            habitNameText.setError("Habit name has been taken!");
+            habitNameEditText.setError("Habit name has been taken!");
         } else if (daySelected.isEmpty()) {
             // if day repeat is not specify
-            habitRepeatText.setError("Habit occurence is empty!");
+            habitRepeatEditText.setError("Habit occurence is empty!");
         } else {
             try {
                 Calendar current = Calendar.getInstance();
@@ -123,7 +125,7 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // print selected day of text field
-                        habitRepeatText.setText(daySelected.toString().replace("[", "").replace("]", ""));
+                        habitRepeatEditText.setText(daySelected.toString().replace("[", "").replace("]", ""));
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -145,7 +147,7 @@ public class CreateHabitActivity extends AppCompatActivity implements View.OnCli
      */
     @Override
     public void onClick(View view) {
-        if (view == habitRepeatText) {
+        if (view == habitRepeatEditText) {
             openRepeatDayPickerDialog();
         } else if (view == createHabitButton) {
             createHabit();
