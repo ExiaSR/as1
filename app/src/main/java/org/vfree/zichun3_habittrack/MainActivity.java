@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void createHabit(View v) {
         Intent intent = new Intent(MainActivity.this, CreateHabitActivity.class);
-        Log.d("File_list", Arrays.toString(fileList()));
         startActivity(intent);
     }
 
@@ -122,26 +121,47 @@ public class MainActivity extends AppCompatActivity {
             // consider the habit which is finished within today
             // as recent completed
             Calendar current = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd");
             for (Habit habit : habitList) {
-                // magic
-                // if the habit should be done today
-                if (current.after(habit.getDate()) || sdf.format(current.getTime()).equals(habit.getDate())) {
-                    if (habit.getHabitOccurance().contains(current.getDisplayName
-                            (Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.CANADA))) {
-                        if (habit.getHabitCompletion().isEmpty()) {
-                            toDoHabitList.add(habit);
-                        } else {
-                            for (Calendar date : habit.getHabitCompletion()) {
-                                current = Calendar.getInstance();
-                                // if the habit has been fullfiled today
-                                if (sdf.format(date.getTime()).equals(sdf.format(current.getTime()))) {
-                                    recentCompleteHabitList.add(habit);
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                // magic, if the habit should be done today
+                if (isHabitToDoToday(habit, current)) {
+                    sortHabit(habit, current);
+                }
+            }
+        }
+    }
+
+    /**
+     * Determine whether the habit should be done today
+     * @param habit the habit
+     * @param current current time
+     * @return
+     */
+    private boolean isHabitToDoToday(Habit habit, Calendar current) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd");
+        if (current.after(habit.getDate()) || sdf.format(current.getTime()).equals(habit.getDate())) {
+            if (habit.getHabitOccurance().contains(current.getDisplayName
+                    (Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.CANADA))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Determine today's habit has been completed or not
+     * @param habit the habit
+     * @param current current time
+     */
+    private void sortHabit(Habit habit, Calendar current) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd");
+        if (habit.getHabitCompletion().isEmpty()) {
+            toDoHabitList.add(habit);
+        } else {
+            for (Calendar date : habit.getHabitCompletion()) {
+                // if the habit has been fullfiled today
+                if (sdf.format(date.getTime()).equals(sdf.format(current.getTime()))) {
+                    recentCompleteHabitList.add(habit);
+                    break;
                 }
             }
         }
