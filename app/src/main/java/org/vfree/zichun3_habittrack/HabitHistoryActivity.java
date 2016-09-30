@@ -1,12 +1,9 @@
 package org.vfree.zichun3_habittrack;
 
-import com.google.gson.Gson;
-
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,7 +20,7 @@ import java.util.List;
 public class HabitHistoryActivity extends AppCompatActivity {
     private ListView habitHistoryListView;
     private ArrayAdapter<Habit> adapter;
-    private ArrayList<Habit> habitList = new ArrayList<Habit>();
+    private ArrayList<Habit> habitList = new ArrayList<>();
     private ArrayList<Calendar> originalCompletion = new ArrayList<>();
     private List<Integer> toDeleteCompletion = new ArrayList<>();
 
@@ -44,21 +41,26 @@ public class HabitHistoryActivity extends AppCompatActivity {
                 } else {
                     openHabitCompletionsDialog(habit);
                 }
-
-
-                Log.d("click", habit.getHabitName());
             }
         });
 
         JsonFileHelper jsonFile = new JsonFileHelper(this);
         habitList = jsonFile.loadAllFile();
+        adapter = new ArrayAdapter<>(this, R.layout.habit_list_view_item, habitList);
+        habitHistoryListView.setAdapter(adapter);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        adapter = new ArrayAdapter<>(this, R.layout.habit_list_view_item, habitList);
-        habitHistoryListView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        habitList.clear();
+        JsonFileHelper jsonFile = new JsonFileHelper(this);
+        habitList = jsonFile.loadAllFile();
     }
 
     /**
@@ -79,7 +81,7 @@ public class HabitHistoryActivity extends AppCompatActivity {
     }
 
     private void openHabitCompletionsDialog(final Habit habit) {
-        List<CharSequence> completionList = new ArrayList<>();
+        List<CharSequence> completionList;
         completionList = getCompletionList(habit);
         AlertDialog.Builder builder = new AlertDialog.Builder(HabitHistoryActivity.this);
         // indicate amount of completion and failure
@@ -116,13 +118,17 @@ public class HabitHistoryActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
 
                     }
-
                 });
         AlertDialog dialog = builder.create();
         // Display the alert dialog on interface
         dialog.show();
     }
 
+    /**
+     * Open a dialog, indication user that the habit having been fullfilled yet
+     * also allow user to delete that habit
+     * @param habit habit
+     */
     private void openUncompletedAlertDialog(final Habit habit) {
         AlertDialog.Builder builder = new AlertDialog.Builder(HabitHistoryActivity.this);
         builder.setTitle("This habit has not been completed yet")
@@ -142,10 +148,14 @@ public class HabitHistoryActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * Return an arraylist of habitcompletion
+     * @param habit
+     * @return habitcompletion
+     */
     private ArrayList<CharSequence> getCompletionList(Habit habit) {
         ArrayList<CharSequence> completionList = new ArrayList<>();
         try {
-
             for (Calendar date : habit.getHabitCompletion()) {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
                 completionList.add(sdf.format(date.getTime()));
@@ -156,6 +166,10 @@ public class HabitHistoryActivity extends AppCompatActivity {
         return completionList;
     }
 
+    /**
+     * Delete the habit completion according to the user choice
+     * @param habit
+     */
     private void deleteHabitCompletion(Habit habit) {
         originalCompletion = habit.getHabitCompletion();
         // deal with IndexOutOfRange Exception
@@ -168,22 +182,26 @@ public class HabitHistoryActivity extends AppCompatActivity {
             }
         }
 
+        // set the new completion back to the habit
         habit.setHabitCompletion(originalCompletion);
 
+        // write changes to json file
         JsonFileHelper jsonFile = new JsonFileHelper(this);
         jsonFile.saveInFile(habit);
 
+        // reload everything
         habitList.clear();
         originalCompletion.clear();
         toDeleteCompletion.clear();
         habitList = jsonFile.loadAllFile();
         adapter.notifyDataSetChanged();
-        recreate();
+        //recreate();
     }
 
+    // delete the habit from internal storage
     private void deleteHabit(Habit habit) {
         JsonFileHelper jsonFile = new JsonFileHelper(this);
         jsonFile.deleteFile(habit);
-        recreate();
+        //recreate();
     }
 }
