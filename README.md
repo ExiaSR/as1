@@ -2,8 +2,9 @@
 Assignment 1 of CMPUT 301 at U of A
 
 # Setup
-* Android Studio
-* Sdk API 23
+* Android Studio 2.1.3
+* JDK 1.7.0_79
+* CompiledSdk version 23
 * minSdkVersion 18
 * BuildToolsVersion 22.0.1
 * Support library v7.23.4
@@ -12,6 +13,7 @@ Assignment 1 of CMPUT 301 at U of A
 # Notes
 * This app is backward compatible till API 18.
 * At the create habit activity, there is no need to specify the date (the default timestamp is today) unless you want a different date
+* Since the unit test requires
 
 # Video URL
 [Youtube](https://youtu.be/luK7AtSaIbU)
