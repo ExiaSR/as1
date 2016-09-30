@@ -15,25 +15,10 @@ public abstract class Habit {
     private ArrayList<Calendar> habitFailure = new ArrayList<>();
 
     /**
-     * constructor when user only specify the habit name
-     *
-     * @param habitName habit name
+     * Empty consturctor
      */
     public Habit() {
 
-    }
-
-    public Habit(String habitName) throws InvalidHabitException {
-        // if habitName is not given
-        if (habitName.isEmpty()) {
-            throw new InvalidHabitException();
-        }
-
-        // set habitName
-        // if date is not given, default is current date
-        this.habitName = habitName;
-        this.date = Calendar.getInstance();
-        //this.createdDate = Calendar.getInstance();
     }
 
     /**
@@ -95,7 +80,6 @@ public abstract class Habit {
         this.habitFailure = habitFailure;
     }
 
-
     /**
      * @param habitName       user specify habit name
      * @param date            user specify start date
@@ -120,19 +104,6 @@ public abstract class Habit {
         this.habitFailure = habitFailure;
     }
 
-    /**
-     * A method to determine if the habit has been completed or not
-     *
-     * @return TRUE or FALSE
-     */
-    protected boolean isCompleted() {
-        if (this.habitCompletion.isEmpty()) {
-            return Boolean.FALSE;
-        } else {
-            return Boolean.TRUE;
-        }
-    }
-
     public String getHabitName() {
         return habitName;
     }
@@ -154,25 +125,8 @@ public abstract class Habit {
         return habitFailure;
     }
 
-//    public void setHabitName(String habitName) {
-//        this.habitName = habitName;
-//    }
-
-//    public void setDate(Calendar date) {
-//        this.date = date;
-//    }
-
     public void setHabitCompletion(ArrayList<Calendar> habitCompletion) {
         this.habitCompletion = habitCompletion;
-    }
-
-    public void setHabitOccurance(ArrayList<String> habitOccurance) {
-        this.habitOccurance = habitOccurance;
-    }
-
-
-    public void setHabitFailure(ArrayList<Calendar> habitFailure) {
-        this.habitFailure = habitFailure;
     }
 
     public void addHabitCompletion(Calendar date) {

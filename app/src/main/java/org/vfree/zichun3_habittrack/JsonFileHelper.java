@@ -3,7 +3,6 @@ package org.vfree.zichun3_habittrack;
 import com.google.gson.Gson;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -89,9 +88,7 @@ public class JsonFileHelper {
      * @return filename
      */
     private String generateFileName(Habit habit) {
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-        Log.d("file_name", sdf.format(habit.getCreatedDate().getTime()) + ".json");
         return sdf.format(habit.getCreatedDate().getTime()) + ".json";
     }
 

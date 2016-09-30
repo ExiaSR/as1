@@ -7,13 +7,9 @@ import java.util.Calendar;
  * Created by Michael on 16-09-24.
  */
 public class NormalHabit extends Habit{
+
     public NormalHabit() {
     }
-
-    public NormalHabit(String habitName) throws InvalidHabitException {
-        super(habitName);
-    }
-
 
     public NormalHabit(String habitName, Calendar date, ArrayList<String> habitOccurrence) throws InvalidHabitException {
         super(habitName, date, habitOccurrence);
