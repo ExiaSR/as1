@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class HabitHistoryActivity extends AppCompatActivity {
     private ListView habitHistoryListView;
-    private ArrayAdapter<Habit> adapter;
+    private ArrayAdapter<Habit> habitAdapter;
     private ArrayList<Habit> habitList = new ArrayList<>();
     private ArrayList<Calendar> originalCompletion = new ArrayList<>();
     private List<Integer> toDeleteCompletion = new ArrayList<>();
@@ -51,8 +51,8 @@ public class HabitHistoryActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        adapter = new ArrayAdapter<>(this, R.layout.habit_list_view_item, habitList);
-        habitHistoryListView.setAdapter(adapter);
+        habitAdapter = new ArrayAdapter<>(this, R.layout.habit_list_view_item, habitList);
+        habitHistoryListView.setAdapter(habitAdapter);
     }
 
     @Override
@@ -60,9 +60,9 @@ public class HabitHistoryActivity extends AppCompatActivity {
         super.onResume();
         JsonFileHelper jsonFile = new JsonFileHelper(this);
         habitList = jsonFile.loadAllFile();
-        adapter.clear();
-        adapter.addAll(habitList);
-        adapter.notifyDataSetChanged();
+        habitAdapter.clear();
+        habitAdapter.addAll(habitList);
+        habitAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -112,7 +112,7 @@ public class HabitHistoryActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         deleteHabit(habit);
-                        adapter.notifyDataSetChanged();
+                        habitAdapter.notifyDataSetChanged();
                     }
                 })
                 // cancel button
@@ -145,7 +145,7 @@ public class HabitHistoryActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         deleteHabit(habit);
-                        adapter.notifyDataSetChanged();
+                        habitAdapter.notifyDataSetChanged();
                     }
                 });
         AlertDialog dialog = builder.create();
@@ -198,7 +198,7 @@ public class HabitHistoryActivity extends AppCompatActivity {
         originalCompletion.clear();
         toDeleteCompletion.clear();
         habitList = jsonFile.loadAllFile();
-        adapter.notifyDataSetChanged();
+        habitAdapter.notifyDataSetChanged();
     }
 
     // delete the habit from internal storage
@@ -206,8 +206,8 @@ public class HabitHistoryActivity extends AppCompatActivity {
         JsonFileHelper jsonFile = new JsonFileHelper(this);
         jsonFile.deleteFile(habit);
         habitList.remove(habit);
-        adapter.clear();
-        adapter.addAll(habitList);
-        adapter.notifyDataSetChanged();
+        habitAdapter.clear();
+        habitAdapter.addAll(habitList);
+        habitAdapter.notifyDataSetChanged();
     }
 }
