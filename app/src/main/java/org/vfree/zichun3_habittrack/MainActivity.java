@@ -62,14 +62,13 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        // load habits
-        loadAllHabit();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        // load habits
+        loadAllHabit();
         recentCompletedHabitAdapter = new ArrayAdapter<>(this, R.layout.habit_list_view_item, recentCompleteHabitList);
         toDoHabitAdapter = new ArrayAdapter<>(this, R.layout.habit_list_view_item, toDoHabitList);
 
@@ -77,6 +76,25 @@ public class MainActivity extends AppCompatActivity {
         toDoHabitListView.setAdapter(toDoHabitAdapter);
     }
 
+    /**
+     * Reload files to refresh this activity when user press back buttom from other activity
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        habitList.clear();
+        recentCompleteHabitList.clear();
+        toDoHabitList.clear();
+        loadAllHabit();
+
+        recentCompletedHabitAdapter.notifyDataSetChanged();
+        toDoHabitAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Onclik event
+     * @param v
+     */
     public void createHabit(View v) {
         Intent intent = new Intent(MainActivity.this, CreateHabitActivity.class);
         startActivity(intent);
@@ -232,21 +250,6 @@ public class MainActivity extends AppCompatActivity {
         loadAllHabit();
 
         // notify arrayadapter the data is changed
-        recentCompletedHabitAdapter.notifyDataSetChanged();
-        toDoHabitAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     * Reload files to refresh this activity when user press back buttom from other activity
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        habitList.clear();
-        recentCompleteHabitList.clear();
-        toDoHabitList.clear();
-        loadAllHabit();
-
         recentCompletedHabitAdapter.notifyDataSetChanged();
         toDoHabitAdapter.notifyDataSetChanged();
     }
