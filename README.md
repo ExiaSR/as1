@@ -18,6 +18,9 @@ Assignment 1 of CMPUT 301 at U of A
 # Video URL
 [Youtube](https://youtu.be/luK7AtSaIbU) (The theme color may not be consistent with the final version)
 
+# collaboration
+Provide consultation and advice to Yu Zhu, Chen Jiang, Stephen Larsen and Alan(Xutong) Zhao.
+
 # Credits
 * [GSON](https://github.com/google/gson) - A Java Json library
 * [Android Developers](https://developer.android.com/index.html) - Code is referenced from this website unless other specify
