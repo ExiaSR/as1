@@ -16,7 +16,7 @@ Assignment 1 of CMPUT 301 at U of A
 * Since the unit test requires
 
 # Video URL
-[Youtube](https://youtu.be/luK7AtSaIbU) (The theme color may not be consistent with the final version)
+[Youtube](https://youtu.be/zyDS62nzuaE) (The theme color may not be consistent with the final version)
 
 # collaboration
 Provide consultation and advice to Yu Zhu, Chen Jiang, Stephen Larsen and Alan(Xutong) Zhao.
