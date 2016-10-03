@@ -21,7 +21,7 @@ public class JsonFileHelperTest extends ApplicationTestCase<Application> {
      * Test whether serializing is working
      * properly or not
      */
-    public void createHabit_isCorrect() {
+    public void createHabitTest() {
         String haitName = "Test";
         ArrayList<String> habitOccurance = new ArrayList<>();
         habitOccurance.add("Monday");
@@ -48,7 +48,7 @@ public class JsonFileHelperTest extends ApplicationTestCase<Application> {
      * and then deserilize habit object from
      * json file, compare them
      */
-    public void serialize_and_deserialize() {
+    public void serializeAndDeserialize() {
         Gson gson = new Gson();
         String haitName = "Test";
         ArrayList<String> habitOccurance = new ArrayList<>();
